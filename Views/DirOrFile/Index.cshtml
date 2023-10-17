@@ -1,0 +1,56 @@
+﻿@model IEnumerable<DiskSpaceWebUI.Models.DirOrFile>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div>
+    <label>Текущая директория @Environment.CurrentDirectory</label>
+    <a asp-action="GoUp">Поднятся на уровень выше</a>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Weight)
+            </th>
+            <th>
+                <a asp-action="ChangePath" asp-route-path=@Environment.CurrentDirectory asp-route-sortOrder="@ViewData["DiskSpaceTakenSortParm"]">@Html.DisplayNameFor(model => model.DiskSpaceTaken)</a>
+            </th>
+        </tr>
+    </thead>
+    
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+                <td>
+                    @if (item.Type == "Папка")
+                    {
+                        <a asp-action="ChangePath" asp-route-path=@item.Path> @Html.DisplayFor(modelItem => item.Name)</a>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.Name)
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Weight)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DiskSpaceTaken)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
