@@ -54,8 +54,10 @@ namespace DiskSpaceWebUI.Controllers
             {
                 str = str.Remove(str.Length - 1);
             }
-            if (str.Length - 1 > 3)
+            if (str.Length > 3)
                 str = str.Remove(str.Length - 1);
+            if (str.Length == 3)
+                return View("Index", dirOrFileRepository.ScanDrives());
             Environment.CurrentDirectory = str;
             return Index("", str);
         }

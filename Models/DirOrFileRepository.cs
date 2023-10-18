@@ -15,6 +15,18 @@ namespace DiskSpaceWebUI.Models
         {
             this.type = type;
         }
+        public List<DirOrFile> ScanDrives() {
+            List<DirOrFile> DataList = new List<DirOrFile>();
+            DriveInfo[] allDrives = DriveInfo.GetDrives();
+            foreach (DriveInfo d in allDrives)
+            {
+                if (d.IsReady == true)
+                {
+                    DataList.Add(new DirOrFile() { Name = d.Name, Path = d.Name, Type = "Папка", Weight = d.TotalSize - d.TotalFreeSpace, DiskSpaceTaken = d.TotalSize - d.AvailableFreeSpace });
+                } 
+            }
+            return DataList;
+        }
         public List<DirOrFile> ScanFolders(string folderPath)
         {
             List<DirOrFile> DataList = new List<DirOrFile>();
